@@ -19,7 +19,7 @@ function RenderItem({ item }) {
             </Card>
         )
     }
-    return <Veiw />
+    return <View />
 }
 class Home extends Component {
 
