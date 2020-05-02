@@ -4,6 +4,7 @@ import Home from './HomeComponent'
 import CampsiteInfo from './CampsiteInfoComponent';
 import About from './AboutComponent'
 import Contact from './ContactComponent'
+import Reservation from './ReservationComponent'
 import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native';
 import { createStackNavigator, createDrawerNavigator, DrawerItems } from 'react-navigation';
 import { Icon } from 'react-native-elements'
@@ -119,6 +120,29 @@ const ContactNavigator = createStackNavigator(
     }
 )
 
+const ReservationNavigator   = createStackNavigator(
+    {
+        Reservation: { screen: Reservation }
+    },
+    {
+        navigationOptions: ({ navigation }) => ({
+            headerStyle: {
+                backgroundColor: '#5637DD'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff'
+            },
+            headerLeft: <Icon
+                name='tree'
+                type='font-awesome'
+                iconStyle={styles.stackIcon}
+                onPress={() => navigation.toggleDrawer()}
+            />
+        })
+
+    }
+)
 const CustomDrawerContentComponent = props => (
     <ScrollView>
         <SafeAreaView 
@@ -152,12 +176,13 @@ const MainNavigator = createDrawerNavigator(
                 )
             }
         },
-        Directory: {
-            screen: DirectoryNavigator,
+        Reservation: {
+            screen: ReservationNavigator,
             navigationOptions: {
+                drawerLabel: 'Reserve Campsite',
                 drawerIcon: ({ tintColor }) => (
                     <Icon
-                        name='list'
+                        name='tree'
                         type='font-awesome'
                         size={24}
                         color={tintColor}
