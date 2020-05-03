@@ -176,6 +176,20 @@ const MainNavigator = createDrawerNavigator(
                 )
             }
         },
+        Directory: {
+            screen: DirectoryNavigator,
+            navigationOptions: {
+                drawerLabel: 'Directory',
+                drawerIcon: ({ tintColor }) => (
+                    <Icon
+                        name='list'
+                        type='font-awesome'
+                        size={24}
+                        color={tintColor}
+                    />
+                )
+            }
+        },
         Reservation: {
             screen: ReservationNavigator,
             navigationOptions: {
