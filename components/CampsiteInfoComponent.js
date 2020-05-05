@@ -18,43 +18,43 @@ const mapDispatchToProps = {
     postComment: (campsiteId, rating, author, text) => (postComment(campsiteId, rating, author, text))
 };
 
-function RenderComments({comments}) {
-    const renderCommentItem = ({item}) => {
-        return(
-            <View style={{margin: 10}}>
-                <Text style={{fontSize: 14}}>{item.text}</Text>
-                <Rating 
-                readonly
-                imageSize={10}
-                startingValue={item.rating}
-                style={{alignItems: 'flex-start', paddingVertical: '5%'}}
+function RenderComments({ comments }) {
+    const renderCommentItem = ({ item }) => {
+        return (
+            <View style={{ margin: 10 }}>
+                <Text style={{ fontSize: 14 }}>{item.text}</Text>
+                <Rating
+                    readonly
+                    imageSize={10}
+                    startingValue={item.rating}
+                    style={{ alignItems: 'flex-start', paddingVertical: '5%' }}
                 />
-                <Text style={{fontSize: 12}}>{`-- ${item.author}, ${item.date}`}</Text>
+                <Text style={{ fontSize: 12 }}>{`-- ${item.author}, ${item.date}`}</Text>
             </View>
         );
     };
 
-    return(
+    return (
         <Card title='Comments'>
             <FlatList
                 data={comments}
                 renderItem={renderCommentItem}
                 keyExtractor={item => item.id.toString()}
-                />
+            />
         </Card>
     );
 }
 
 function RenderCampsite(props) {
 
-    const {campsite} = props;
+    const { campsite } = props;
 
     if (campsite) {
         return (
             <Card
                 featuredTitle={campsite.name}
-                image={{uri: baseUrl + campsite.image}}>
-                <Text style={{margin: 10}}>
+                image={{ uri: baseUrl + campsite.image }}>
+                <Text style={{ margin: 10 }}>
                     {campsite.description}
                 </Text>
                 <View style={styles.cardRow}>
@@ -64,17 +64,17 @@ function RenderCampsite(props) {
                         color='#f50'
                         raised
                         reverse
-                        onPress={() => props.favorite ? 
+                        onPress={() => props.favorite ?
                             console.log('Already set as a favorite') : props.markFavorite()}
                     />
-                    <Icon 
-                    style={styles.cardItem}
-                    name='pencil'
-                    type='font-awesome'
-                    color='#5637DD'
-                    raised
-                    reverse
-                    onPress={() => props.onShowModal()}
+                    <Icon
+                        style={styles.cardItem}
+                        name='pencil'
+                        type='font-awesome'
+                        color='#5637DD'
+                        raised
+                        reverse
+                        onPress={() => props.onShowModal()}
                     />
                 </View>
             </Card>
@@ -96,9 +96,9 @@ class CampsiteInfo extends Component {
     }
 
     toggleModal() {
-        this.setState({showModal: !this.setState.showModal})
+        this.setState({ showModal: !this.setState.showModal })
     }
-    
+
     handleComment(campsiteId) {
         this.props.postComment(campsiteId, this.state.rating, this.state.author, this.state.text);
         this.toggleModal();
@@ -140,44 +140,44 @@ class CampsiteInfo extends Component {
                     onRequestClose={() => this.toggleModal()}>
                     <View style={styles.modal}>
                         <Rating
-                        showRating
-                        startingValue={this.state.rating} 
-                        imageSize= {40}
-                        onFinishRating={(rating)=>this.setState({rating: rating})} 
-                        style={{paddingVertical: 10}}
+                            showRating
+                            startingValue={this.state.rating}
+                            imageSize={40}
+                            onFinishRating={(rating) => this.setState({ rating: rating })}
+                            style={{ paddingVertical: 10 }}
                         />
                         <Input
-                        placeholder='Author'
-                        leftIcon={{type: 'font-awesome', name:'user-o'}}
-                        leftIconContainerStyle={{paddingRight: 10}}
-                        onChangeText={(author) => this.setState({author: author})}
-                        value={this.state.author}
+                            placeholder='Author'
+                            leftIcon={{ type: 'font-awesome', name: 'user-o' }}
+                            leftIconContainerStyle={{ paddingRight: 10 }}
+                            onChangeText={(author) => this.setState({ author: author })}
+                            value={this.state.author}
                         />
                         <Input
-                        placeholder='Comment'
-                        leftIcon={{type: 'font-awesome', name:'comment-o'}}
-                        leftIconContainerStyle={{paddingRight: 10}}
-                        onChangeText={(text) => this.setState({text: text})}
-                        value={this.state.text}
+                            placeholder='Comment'
+                            leftIcon={{ type: 'font-awesome', name: 'comment-o' }}
+                            leftIconContainerStyle={{ paddingRight: 10 }}
+                            onChangeText={(text) => this.setState({ text: text })}
+                            value={this.state.text}
                         />
-                        <View style={{margin: 10}}>
-                            <Button 
-                            onPress={() => {
-                                this.handleComment(campsiteId);
-                                this.resetForm();
-                            }}
-                            color='#5637DD'
-                            title='Submit'
+                        <View style={{ margin: 10 }}>
+                            <Button
+                                onPress={() => {
+                                    this.handleComment(campsiteId);
+                                    this.resetForm();
+                                }}
+                                color='#5637DD'
+                                title='Submit'
                             />
                         </View>
-                        <View style={{margin:10}}>
-                            <Button 
-                            onPress={() => {
-                                this.toggleModal();
-                                this.resetForm();
-                            }}
-                            color='#808080'
-                            title='Cancel'
+                        <View style={{ margin: 10 }}>
+                            <Button
+                                onPress={() => {
+                                    this.toggleModal();
+                                    this.resetForm();
+                                }}
+                                color='#808080'
+                                title='Cancel'
                             />
                         </View>
                     </View>
