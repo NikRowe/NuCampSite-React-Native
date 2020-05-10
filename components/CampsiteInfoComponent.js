@@ -54,6 +54,8 @@ function RenderCampsite(props) {
 
     const view = React.createRef()
 
+    const recognizeComment = ({ dx }) => (dx > 200) ? true: false
+
     // this is how you set how much you need to swipe to activate the panReponder //
     const recognizeDrag = ({ dx }) => (dx < -200) ? true : false
 
@@ -83,6 +85,8 @@ function RenderCampsite(props) {
                     ],
                     { cancelable: false }
                 )
+            } else if (recognizeComment(gestureState)) {
+                props.onShowModal()
             }
             return true
         }
