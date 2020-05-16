@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, FlatList, Modal, Button, StyleSheet, Alert, PanResponder } from 'react-native';
+import {
+    Text, View, ScrollView, FlatList,
+    Modal, Button, StyleSheet,
+    Alert, PanResponder, Share
+} from 'react-native';
 import { Card, Icon, Rating, Input } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
@@ -54,7 +58,7 @@ function RenderCampsite(props) {
 
     const view = React.createRef()
 
-    const recognizeComment = ({ dx }) => (dx > 200) ? true: false
+    const recognizeComment = ({ dx }) => (dx > 200) ? true : false
 
     // this is how you set how much you need to swipe to activate the panReponder //
     const recognizeDrag = ({ dx }) => (dx < -200) ? true : false
@@ -63,7 +67,7 @@ function RenderCampsite(props) {
         onStartShouldSetPanResponder: () => true,
         onPanResponderGrant: () => {
             view.current.rubberBand(1000)
-            .then(endState => console.log(endState.finished ? 'finsihed' : 'canceled'))
+                .then(endState => console.log(endState.finished ? 'finsihed' : 'canceled'))
         },
         onPanResponderEnd: (e, gestureState) => {
             console.log('pan responder end', gestureState)
@@ -91,6 +95,16 @@ function RenderCampsite(props) {
             return true
         }
     })
+
+    const shareCampsite = (title, message, url) => {
+        Share.share({
+            title: title,
+            message: `${title}: ${message} ${url}`,
+            url: url
+        },{
+            dialogTitle: 'Share ' + title
+        });
+    };
 
     if (campsite) {
         return (
@@ -124,6 +138,15 @@ function RenderCampsite(props) {
                             raised
                             reverse
                             onPress={() => props.onShowModal()}
+                        />
+                        <Icon
+                            name={'share'}
+                            type='font-awesome'
+                            color='#5637DD'
+                            style={styles.cardItem}
+                            raised
+                            reverse
+                            onPress={() => shareCampsite(campsite.name, campsite.description, baseUrl + campsite.image)}
                         />
                     </View>
                 </Card>
